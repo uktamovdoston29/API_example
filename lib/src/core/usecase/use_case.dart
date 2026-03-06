@@ -1,6 +1,6 @@
 
-import 'package:api_example/src/core/utils/either/either.dart';
-import 'package:api_example/src/core/utils/failure/failure.dart';
+import 'package:api_example/src/core/either/either.dart';
+import 'package:api_example/src/core/failure/failure.dart';
 import 'package:equatable/equatable.dart';
 
 

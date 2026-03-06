@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:api_example/main.dart';
 import 'package:api_example/src/features/auth/data/source/auth_data_source.dart';
-import 'package:api_example/src/core/utils/either/either.dart';
-import 'package:api_example/src/core/utils/failure/failure.dart';
+import 'package:api_example/src/core/either/either.dart';
+import 'package:api_example/src/core/failure/failure.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:toastification/toastification.dart';
 
 class AuthDataSourceImpl extends AuthDataSource {
   final Dio client = Dio();
@@ -61,6 +64,13 @@ class AuthDataSourceImpl extends AuthDataSource {
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         print(
           '✅ [login] SUCCESS — status: ${response.statusCode}, body: ${response.data}',
+        );
+        toastification.show(
+          type: ToastificationType.info,
+          context: navigatorKey
+              .currentContext!, // optional if you use ToastificationWrapper
+          title: Text('Your code: ${response.data['otp']}'),
+          autoCloseDuration: const Duration(seconds: 10),
         );
         return Right(response.data['detail']);
       } else {

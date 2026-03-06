@@ -8,6 +8,9 @@ import 'package:api_example/src/features/home/presentation/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:toastification/toastification.dart';
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
 void main() async {
   await GetStorage.init();
@@ -30,13 +33,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)),
-      home: GetStorage().read('refresh') != null
-          ? HomeScreen()
-          : const SignInScreen(),
+    return ToastificationWrapper(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        navigatorKey: navigatorKey,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)),
+        home: GetStorage().read('refresh') != null
+            ? HomeScreen()
+            : const SignInScreen(),
+      ),
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:api_example/src/features/auth/domain/usecase/auth_login_usercase.dart';
 import 'package:api_example/src/features/auth/domain/usecase/auth_register_usecase.dart';
 import 'package:api_example/src/features/auth/presentation/cubit/auth_state.dart';
-import 'package:api_example/src/core/utils/services/storage_service.dart';
+import 'package:api_example/src/core/services/storage_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthCubit extends Cubit<AuthState> {

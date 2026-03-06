@@ -1,7 +1,7 @@
 import 'package:api_example/src/features/auth/data/source/auth_data_source.dart';
 import 'package:api_example/src/features/auth/domain/repository/auth_repository.dart';
-import 'package:api_example/src/core/utils/either/either.dart';
-import 'package:api_example/src/core/utils/failure/failure.dart';
+import 'package:api_example/src/core/either/either.dart';
+import 'package:api_example/src/core/failure/failure.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
   final AuthDataSource authDataSource;

@@ -1,7 +1,12 @@
-import 'package:api_example/src/core/utils/usecase/otp_confirm_usecase.dart';
+import 'dart:async';
+
+import 'package:api_example/src/core/usecase/otp_confirm_usecase.dart';
+import 'package:api_example/src/core/utils/time_format_extenstion.dart';
 import 'package:api_example/src/features/auth/data/repository/auth_repository_impl.dart';
 import 'package:api_example/src/features/auth/data/source/auth_data_source_impl.dart';
+import 'package:api_example/src/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:api_example/src/features/auth/presentation/cubit/otp_cubit.dart';
+import 'package:api_example/src/features/auth/presentation/cubit/otp_event.dart';
 import 'package:api_example/src/features/auth/presentation/cubit/otp_state.dart';
 import 'package:api_example/src/features/home/presentation/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -25,12 +30,29 @@ class OTPScreen extends StatefulWidget {
 
 class _OTPScreenState extends State<OTPScreen> {
   final TextEditingController otpController = TextEditingController();
-  // * android -> garbage collector | 
+  // * android -> garbage collector |
   // * desktop -> dispose
+
+  int seconds = 120;
+  late Timer timer;
+
+  @override
+  void initState() {
+    timer = Timer.periodic(Duration(seconds: 1), (v) {
+      if (seconds != 0) {
+        seconds--;
+        setState(() {});
+      } else {
+        timer.cancel();
+      }
+    });
+    super.initState();
+  }
 
   @override
   void dispose() {
     otpController.dispose();
+    timer.cancel();
     super.dispose();
   }
 
@@ -59,10 +81,14 @@ class _OTPScreenState extends State<OTPScreen> {
                   border: OutlineInputBorder(),
                 ),
               ),
+              Text('Retry again :${seconds.formatTime()}'),
               SizedBox(height: 24),
               BlocConsumer<OtpCubit, OTPState>(
                 listener: (context, state) {
                   if (state.status == OTPStatus.authentificate) {
+                    context
+                        .read<OtpCubit>()
+                        .add(OchirishEvent(text: 'fdsfdsfds'));
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text("OTP tasdiqlandi!")),
                     );
@@ -84,10 +110,8 @@ class _OTPScreenState extends State<OTPScreen> {
                   }
                   return ElevatedButton(
                     onPressed: () {
-                      context.read<OtpCubit>().confirmOTP(
-                            email: widget.email,
-                            code: otpController.text,
-                          );
+                      context.read<OtpCubit>().add(VerifyOtpEvent(
+                          email: widget.email, code: otpController.text));
                     },
                     child: Text("Verify OTP"),
                   );
