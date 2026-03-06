@@ -12,7 +12,7 @@ class AuthDataSourceImpl extends AuthDataSource {
   }) async {
     try {
       final response = await client.post(
-       'https://api-service.fintechhub.uz/token/refresh/',
+       'https://api-service.fintechhub.uz/login/',
         data: userInfo,
       );
 
