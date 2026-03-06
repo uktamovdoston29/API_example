@@ -7,19 +7,32 @@ import 'package:api_example/src/features/home/presentation/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class OTPScreen extends StatelessWidget {
+class OTPScreen extends StatefulWidget {
   final String email;
   final String username;
   final String password;
 
-  final TextEditingController otpController = TextEditingController();
-
-  OTPScreen({
+  const OTPScreen({
     super.key,
     required this.email,
     required this.username,
     required this.password,
   });
+
+  @override
+  State<OTPScreen> createState() => _OTPScreenState();
+}
+
+class _OTPScreenState extends State<OTPScreen> {
+  final TextEditingController otpController = TextEditingController();
+  // * android -> garbage collector | 
+  // * desktop -> dispose
+
+  @override
+  void dispose() {
+    otpController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +49,8 @@ class OTPScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Email: $email"),
-               SizedBox(height: 16),
+              Text("Email: ${widget.email}"),
+              SizedBox(height: 16),
               TextField(
                 controller: otpController,
                 keyboardType: TextInputType.number,
@@ -46,7 +59,7 @@ class OTPScreen extends StatelessWidget {
                   border: OutlineInputBorder(),
                 ),
               ),
-               SizedBox(height: 24),
+              SizedBox(height: 24),
               BlocConsumer<OtpCubit, OTPState>(
                 listener: (context, state) {
                   if (state.status == OTPStatus.authentificate) {
@@ -72,9 +85,9 @@ class OTPScreen extends StatelessWidget {
                   return ElevatedButton(
                     onPressed: () {
                       context.read<OtpCubit>().confirmOTP(
-                        email: email,
-                        code: otpController.text,
-                      );
+                            email: widget.email,
+                            code: otpController.text,
+                          );
                     },
                     child: Text("Verify OTP"),
                   );
