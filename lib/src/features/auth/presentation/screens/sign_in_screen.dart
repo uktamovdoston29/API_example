@@ -36,7 +36,7 @@ class _SignInScreenState extends State<SignInScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 100),
+              SizedBox(height: 100),
               Text(
                 "Sign In",
                 textAlign: TextAlign.center,
@@ -46,7 +46,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   color: Colors.white,
                 ),
               ),
-              const SizedBox(height: 3),
+               SizedBox(height: 3),
               Text(
                 "Please sign in to your existing account",
                 textAlign: TextAlign.center,
@@ -56,7 +56,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   color: Colors.white,
                 ),
               ),
-              const Spacer(),
+               Spacer(),
               Container(
                 height: MediaQuery.sizeOf(context).height * 0.6,
                 width: double.infinity,
@@ -69,20 +69,20 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
                 child: Column(
                   children: [
-                    const SizedBox(height: 8),
+                     SizedBox(height: 8),
                     AuthInputWidget(
                       title: "Username",
                       hinText: "username",
                       controller: usernameController,
                     ),
-                    const SizedBox(height: 12),
+                     SizedBox(height: 12),
                     AuthInputWidget(
                       title: "Password",
                       hinText: "**********",
                       suffixIcon: const Icon(Icons.remove_red_eye),
                       controller: passwordController,
                     ),
-                    const SizedBox(height: 24),
+                     SizedBox(height: 24),
                     BlocConsumer<AuthCubit, AuthState>(
                       listener: (context, state) {
                         if (state.status == AuthStatus.authentificated) {
@@ -115,7 +115,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               },
                               text: 'LOG IN',
                             ),
-                            const SizedBox(height: 12),
+                             SizedBox(height: 12),
                             TextButton(
                               onPressed: () {
                                 Navigator.of(context).push(

@@ -37,7 +37,7 @@ class OTPScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text("Email: $email"),
-              const SizedBox(height: 16),
+               SizedBox(height: 16),
               TextField(
                 controller: otpController,
                 keyboardType: TextInputType.number,
@@ -46,7 +46,7 @@ class OTPScreen extends StatelessWidget {
                   border: OutlineInputBorder(),
                 ),
               ),
-              const SizedBox(height: 24),
+               SizedBox(height: 24),
               BlocConsumer<OtpCubit, OTPState>(
                 listener: (context, state) {
                   if (state.status == OTPStatus.authentificate) {
